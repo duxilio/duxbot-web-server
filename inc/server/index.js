@@ -5,9 +5,9 @@ var routes = require('./routes');
 
 var server = {
 
-	start: function(port){
-		routes(app);
-		app.listen(port);
+	start: function(options){
+		routes(app, options);
+		app.listen(3000);
 	}
 
 };
