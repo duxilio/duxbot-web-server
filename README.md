@@ -9,7 +9,7 @@
 #### Example Request Body
 ```json
 {
-     "query": “me and paddington have a meeting”
+     "query": "me and paddington have a meeting"
 }
 ```
 
@@ -20,12 +20,12 @@
     "success": true,
     "needAnswer": true,
     "results": [{
-        "type": 'response',
-        "content": 'alright, I do need some more info'
+        "type": "response",
+        "content": "alright, I do need some more info"
     }, {
-        "type": 'question',
+        "type": "question",
         "content": {
-            "main": 'What time is your meeting?'
+            "main": "What time is your meeting?"
         }
     }]
 }
