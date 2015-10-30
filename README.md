@@ -9,23 +9,23 @@
 #### Example Request Body
 ```json
 {
-     query: “me and paddington have a meeting”
+     "query": “me and paddington have a meeting”
 }
 ```
 
 #### Example Response Body
 ```json
 {
-    requestId: 007,
-    success: true,
-    needAnswer: true,
-    results: [{
-        type: 'response',
-        content: 'alright, I do need some more info'
+    "requestId": 007,
+    "success": true,
+    "needAnswer": true,
+    "results": [{
+        "type": 'response',
+        "content": 'alright, I do need some more info'
     }, {
-        type: 'question',
-        content: {
-            main: 'What time is your meeting?'
+        "type": 'question',
+        "content": {
+            "main": 'What time is your meeting?'
         }
     }]
 }
