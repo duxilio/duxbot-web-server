@@ -10,7 +10,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "chalk": "^1.1.0",
-    "say": "^0.6.0",
+    "express": "^4.13.3",
     "wolfram": "^0.3.2"
   }
 }
