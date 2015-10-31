@@ -2,7 +2,8 @@ var utils = require('./utils'),
 	queryHandlers = {
 		event: require('./handlers/Event'),
 		general: require('./handlers/General'),
-		banking: require('./handlers/Banking')
+		banking: require('./handlers/Banking'),
+		show: require('./handlers/Show')
 	};
 
 module.exports = {
@@ -65,6 +66,12 @@ module.exports = {
 				handler: function(foundWord, query){
 					callback.category = 'banking';
 					new queryHandlers.banking(foundWord, query, callback);
+				}
+			}, {
+				words: ['show me'],
+				handler: function(foundWord, query){
+					callback.category = 'show';
+					new queryHandlers.show(foundWord, query, callback);
 				}
 			}],
 			defaultAction: function(){

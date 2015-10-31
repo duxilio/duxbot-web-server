@@ -33,15 +33,22 @@ var apisController = {
 			//category is unknown
 			//ask wolfram
 			this._askWolfram(options.humanQuery, function(strResult){
-				var result = strResult,
-					arrResult = result.split('\n'),
-					details = null;
+				var result;
 
-				if(arrResult.length > 1){
-					result = 'Here\'s what I\'ve found';
-					details = {
-						definitions: arrResult
-					};
+				if(strResult !== null){
+					result = strResult.trim();
+					
+					var arrResult = result.split('\n'),
+						details = null;
+
+					if(arrResult.length > 1){
+						result = 'Here\'s what I\'ve found';
+						details = {
+							definitions: arrResult
+						};
+					}
+				} else {
+					result = strResult;
 				}
 				
 				callback({

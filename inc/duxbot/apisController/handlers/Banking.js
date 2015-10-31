@@ -14,7 +14,7 @@ var Banking = function(options, callback){
 					msg = 'you have ';
 				
 				accounts.forEach(function(accDetails, idx){
-					msg += accDetails.Balance+' euro on your '+accDetails.ProductName;
+					msg += accDetails.Balance+' euro on your '+accDetails.ProductName.toLowerCase();
 					if(idx !== accounts.length-1){
 						msg += ' and ';
 					}

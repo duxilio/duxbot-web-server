@@ -19,7 +19,7 @@ module.exports = {
                 }
     		};
 
-        var req = http.request( params, function(res){
+        var req = http.request(params, function(res){
             res.setEncoding('utf8');
 
             var data = '';
