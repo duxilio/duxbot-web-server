@@ -1,8 +1,14 @@
-var wolfram = require('wolfram').createClient(process.env.WOLFRAM_APPID);
+var fs = require('fs'),
+	wolfram = require('wolfram').createClient(process.env.WOLFRAM_APPID);
 
-var handlers = {
-	event: require('./handlers/Event')
-};
+//import all handlers
+var handlers = {};
+fs.readdirSync(__dirname+'/handlers').forEach(function(filename){
+	if(/\.js$/.test(filename)){
+		var handlerName = filename.toLowerCase().replace('.js', '');
+		handlers[handlerName] = require('./handlers/'+filename);
+	}
+});
 
 var apisController = {
 

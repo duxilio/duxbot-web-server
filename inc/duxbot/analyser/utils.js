@@ -21,9 +21,15 @@ var utils = {
 
 			//if triggerWord is found in query
 			for(var j = currObj.words.length-1; j >= 0; j--){
-				var currWord = currObj.words[j];
+				var currWord = currObj.words[j],
+					check = this.checkStrForWord(currWord, query);
 
-				if(this.checkStrForWord(currWord, query)){
+				if(currObj.customRegex){
+					//currWord is custom regex string
+					check = new RegExp(currWord).test(query);
+				}
+
+				if(check){
 					wordFoundHandler(currObj, currWord);
 					return;
 				}

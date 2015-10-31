@@ -1,6 +1,7 @@
 var utils = require('./utils'),
 	queryHandlers = {
-		event: require('./handlers/Event')
+		event: require('./handlers/Event'),
+		general: require('./handlers/General')
 	};
 
 module.exports = {
@@ -8,8 +9,8 @@ module.exports = {
 	analyse: function(query, cachedData, rawCallback){
 		var self = this;
 
-		//analyser ignores case
-		query = query.toLowerCase();
+		//query ignore case and trim
+		query = query.toLowerCase().trim();
 
 		var callback = {
 			category: '',
@@ -47,6 +48,16 @@ module.exports = {
 				handler: function(foundWord, query){
 					callback.category = 'event';
 					new queryHandlers.event(foundWord, query, callback);
+				}
+			}, {
+				words: [
+						'^hey$', '^who are you$',
+						'^what can (i|you) (do|say)$'
+				],
+				customRegex: true,
+				handler: function(foundWord, query){
+					callback.category = 'general';
+					new queryHandlers.general(foundWord, query, callback);
 				}
 			}],
 			defaultAction: function(){

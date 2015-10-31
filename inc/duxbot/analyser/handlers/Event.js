@@ -31,7 +31,7 @@ Event.prototype._checkMethod = function(query, cachedData){
 	utils.triggerWordsSwitch({
 		query: query,
 		triggerWords: [{
-			words: ['create', 'plan', 'schedule', 'have an appointment'],
+			words: ['create', 'plan', 'schedule', 'have an appointment', 'have an event', 'have a meeting'],
 			handler: function(){
 				self._handleScheduleMethod(query, cachedData);
 			}
@@ -51,21 +51,28 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 	//check details
 
 	//check invite emails
-	var persons = [{
-		trigger: 'paddington',
+	var contacts = [{
+		triggers: ['paddington'],
 		email: 'matti@duxilio.com'
 	}, {
-		trigger: 'me',
+		triggers: ['me', 'myself'],
 		email: 'koen@duxilio.com'
 	}];
 
 	if(!details.inviteEmails){
 		var inviteEmails = [];
-		for(var i = 0; i < persons.length; i++){
-			var curr = persons[i];
-			if(query.indexOf(curr.trigger) !== -1){
-				//person is named in query
-				inviteEmails.push(curr.email);
+
+		//loop all contacts
+		for(var i = 0; i < contacts.length; i++){
+			var curr = contacts[i];
+
+			//check if a triggerword can be found in the query
+			//and if the email is not added yet
+			for(var j = 0; j < curr.triggers.length; j++){
+				if(query.indexOf(curr.triggers[j]) !== -1 &&
+					inviteEmails.indexOf(curr.email) === -1){
+					inviteEmails.push(curr.email);
+				}
 			}
 		}
 		details.inviteEmails = inviteEmails;
@@ -73,7 +80,7 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 
 	//time
 	if(!details.time){
-		match = query.match(/(\d(pm|am))/);
+		match = query.match(/(\d+(pm|am))/);
 		if(match !== null){
 			details.time = match[1];
 		}
@@ -90,7 +97,6 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 	//name
 	if(!details.name){
 		match = query.match(/called ([^\s]+)/);
-		console.log('NAME', match);
 		if(match !== null){
 			details.name = match[1];
 		}
