@@ -1,13 +1,4 @@
-var neededProps = {
-
-	schedule: {
-		inviteEmails: 'Who would you like to invite?',
-		time: 'What time is the event?',
-		date: 'What date is the event?',
-		name: 'What is the name of the event?'
-	}
-
-};
+var utils = require('../utils');
 
 var Event = function(options, callback){
 	this._callback = callback;
@@ -15,7 +6,17 @@ var Event = function(options, callback){
 	//check method
 	switch(options.method){
 		case 'schedule':
-			this._processMethod('schedule', options.details, this._scheduleEvent);
+			utils.processNeedyMethod({
+				neededProps: {
+					inviteEmails: 'Who would you like to invite?',
+					time: 'What time is the event?',
+					date: 'What date is the event?',
+					name: 'What is the name of the event?'
+				},
+				reqDetails: options.details,
+				success: this._scheduleEvent.bind(this),
+				resCallback: callback
+			});
 			break;
 		default:
 			callback({
@@ -26,32 +27,6 @@ var Event = function(options, callback){
 			});
 			break;
 	}
-};
-
-Event.prototype._processMethod = function(methodName, reqDetails, processFunc){
-	if(this._checkProperties(neededProps[methodName], reqDetails)){
-		processFunc.call(this, reqDetails);
-	}
-};
-
-Event.prototype._checkProperties = function(neededProps, reqDetails){
-	var callback = this._callback;
-
-	//start by check if everything is here
-	for(key in neededProps){
-		if(typeof reqDetails[key] === 'undefined'){
-			//prop not here, ask for it
-			callback({
-				success: true,
-				type: 'question',
-				message: neededProps[key],
-				parsedDetails: reqDetails
-			});
-			return false;
-		}
-	};
-
-	return true
 };
 
 Event.prototype._scheduleEvent = function(reqDetails){

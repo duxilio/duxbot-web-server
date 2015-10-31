@@ -1,4 +1,5 @@
-var reqHelper = require('../../reqHelper');
+var reqHelper = require('../../reqHelper'),
+	utils = require('../utils');
 
 var Banking = function(options, callback){
 	this._callback = callback;
@@ -94,6 +95,17 @@ var Banking = function(options, callback){
 				});
 			});
 			break;
+		case 'make_transfer':
+			utils.processNeedyMethod({
+				neededProps: {
+					amount: 'What is the amount you would like to transfer?',
+					accountNumber: 'What is the account number you would like to transfer to?'
+				},
+				reqDetails: options.details,
+				success: this._makeTransfer.bind(this),
+				resCallback: callback
+			});
+			break;
 		default:
 			callback({
 				success: false,
@@ -103,6 +115,18 @@ var Banking = function(options, callback){
 			});
 			break;
 	}
+};
+
+Banking.prototype._makeTransfer = function(options){
+	var callback = this._callback;
+
+	callback({
+		success: true,
+		type: 'response',
+		message: 'do transfer',
+		details: options,
+		parsedDetails: {}
+	});
 };
 
 module.exports = Banking;

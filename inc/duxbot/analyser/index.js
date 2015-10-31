@@ -62,7 +62,11 @@ module.exports = {
 					new queryHandlers.general(foundWord, query, callback);
 				}
 			}, {
-				words: ['our current balance', 'banks in', 'a bank in', 'latest transactions', 'recent transactions'],
+				words: ['(our|my) current balance',
+				  	    'banks in', 'rob a bank in',
+				  	    '(latest|recent) transactions',
+				  	    'transfer [0-9]+'],
+				customRegex: true,
 				handler: function(foundWord, query){
 					callback.category = 'banking';
 					new queryHandlers.banking(foundWord, query, callback);
