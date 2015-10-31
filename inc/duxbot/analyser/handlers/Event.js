@@ -8,12 +8,12 @@ var persons = [{
 	email: 'koen@duxilio.com'
 }];
 
-var Appointment = function(foundWord, query, callback, cachedData){
+var Event = function(foundWord, query, callback, cachedData){
 	this._callback = callback;
 	this.checkForTriggerWords(query, cachedData);
 };
 
-Appointment.prototype.checkForTriggerWords = function(query, cachedData){
+Event.prototype.checkForTriggerWords = function(query, cachedData){
 	var self = this,
 		callback = this._callback;
 
@@ -24,7 +24,7 @@ Appointment.prototype.checkForTriggerWords = function(query, cachedData){
 	callback.trigger();
 };
 
-Appointment.prototype._checkMethod = function(query, cachedData){
+Event.prototype._checkMethod = function(query, cachedData){
 	var self = this;
 
 	if(cachedData){
@@ -50,7 +50,7 @@ Appointment.prototype._checkMethod = function(query, cachedData){
 	});
 };
 
-Appointment.prototype._handleScheduleMethod = function(query, cachedData){
+Event.prototype._handleScheduleMethod = function(query, cachedData){
 	var details = cachedData && cachedData.details ? cachedData.details : {},
 		match;
 
@@ -97,4 +97,4 @@ Appointment.prototype._handleScheduleMethod = function(query, cachedData){
 	this._callback.details = details;
 };
 
-module.exports = Appointment;
+module.exports = Event;

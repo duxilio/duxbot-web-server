@@ -1,7 +1,7 @@
 var wolfram = require('wolfram').createClient(process.env.WOLFRAM_APPID);
 
 var handlers = {
-	appointment: require('./handlers/appointment')
+	event: require('./handlers/Event')
 };
 
 var apisController = {

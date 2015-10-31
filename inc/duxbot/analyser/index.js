@@ -1,6 +1,6 @@
 var utils = require('./utils'),
 	queryHandlers = {
-		appointment: require('./handlers/Appointment')
+		event: require('./handlers/Event')
 	};
 
 module.exports = {
@@ -43,10 +43,10 @@ module.exports = {
 		utils.triggerWordsSwitch({
 			query: query,
 			triggerWords: [{
-				words: ['appointment', 'meeting'],
+				words: ['appointment', 'meeting', 'event'],
 				handler: function(foundWord, query){
-					callback.category = 'appointment';
-					new queryHandlers.appointment(foundWord, query, callback);
+					callback.category = 'event';
+					new queryHandlers.event(foundWord, query, callback);
 				}
 			}],
 			defaultAction: function(){

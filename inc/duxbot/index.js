@@ -58,7 +58,10 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 		 	var output = {
 		 		success: handlerResult.success,
 		 		type: handlerResult.type,
-		 		message: handlerResult.message
+		 		message: handlerResult.message,
+		 		//basically parsedDetails but by calling it details we can
+		 		//control if the user gets it in the reponse in the category handler
+		 		details: handlerResult.details || null
 		 	};
 
 		 	if(output.type === 'question'){
@@ -71,7 +74,7 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 	 			cacheItem.category = analyserResult.category;
 	 			cacheItem.method = analyserResult.method;
 	 			cacheItem.details = analyserResult.details;
-		 	} else if(output.type === 'response' && requestId) {
+		 	} else if(output.type === 'response' && requestId){
 		 		//check if it belongs to a requestId
 		 		//if so remove the record from cache as
 		 		//the request has been resolved
