@@ -5,31 +5,47 @@ var logger = require('../logger'),
 	Cache = require('./Cache');
 
 var Duxbot = function(){
-	this._parsedDetailsCache = new Cache();
+	this._cache = new Cache();
 };
 
 Duxbot.prototype.analyse = function(query, requestId, callback){
-	var	parsedDetailsCache = this._parsedDetailsCache,
-		self = this;
+	var	cache = this._cache,
+		self = this,
+		cachedData;
 
 	/**
-	 * 1. analyse the query to something we can use
+	 * 1. check if there was already data for the request
+	 */
+	 if(requestId){
+	 	cachedData = self._checkForCachedData(requestId);
+	 	if(cachedData === null){
+ 			//user gave an invalid requestId in the request
+ 			callback({
+ 				success: false,
+ 				message: 'that requestId was not found in the cache'
+ 			});
+ 			return;
+ 		}
+	 }
+
+	/**
+	 * 2. analyse the query to something we can use
 	 *    a.k.a human sentence to JSON
 	 */
-	analyser.analyse(query, function(analyserResult){
-		/**
-		 * 2. check if there was already data for the request
-		 *    if so, add it to the details
-		 */
-		 var details = analyserResult.details;
-		 if(requestId){
-		 	var data = self._checkForCachedData(requestId)
-		 	details = utils.extendObj(details, data);
-		 }
-		 analyserResult.details = details;
+	analyser.analyse(query, cachedData, function(analyserResult){
+
+	 	if(cachedData){
+	 		//if there is cached data
+	 		//add it to the results that will be passed
+	 		//to the api handler
+	 		console.log('BEFORE', analyserResult);
+	 		analyserResult.category = cachedData.category;
+	 		analyserResult.method = cachedData.method;
+	 		analyserResult.details = utils.extendObj(analyserResult.details, cachedData.details);
+	 		console.log('AFTER', analyserResult);
+	 	}
 
 		 logger.log('IS_NEW_REQUEST', requestId === null, 'REQUEST_ID', requestId);
-
 		 logger.log('ANALYSER_RESULT', analyserResult);
 
 		 /**
@@ -41,13 +57,22 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 
 		 	logger.log('HANDLER_RESULT', handlerResult);
 
-		 	var output = handlerResult;
+		 	var output = {
+		 		success: handlerResult.success,
+		 		type: handlerResult.type,
+		 		message: handlerResult.message
+		 	};
 
 		 	if(output.type === 'question'){
 		 		//its a question,
 		 		//if there already is a requestId use it, otherwise
-		 		//create a new one
-		 		output.requestId = requestId || parsedDetailsCache.createNew(requestId);
+		 		//create a new one and add the known details to the cache
+		 		output.requestId = requestId || cache.createNew(requestId);
+
+		 		var cacheItem = cache.get(output.requestId);
+	 			cacheItem.category = analyserResult.category;
+	 			cacheItem.method = analyserResult.method;
+	 			cacheItem.details = analyserResult.details;
 		 	}
 
 		 	logger.log('OUTPUT', output, '\n\n');
@@ -57,11 +82,11 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 };
 
 Duxbot.prototype._checkForCachedData = function(requestId){
-	var parsedDetailsCache = this._parsedDetailsCache;
+	var cache = this._cache;
 
 	//its an answer to
 	//a question that was asked earlier
-	return parsedDetailsCache.get(requestId);
+	return cache.get(requestId);
 };
 
 module.exports = Duxbot;

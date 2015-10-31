@@ -4,7 +4,7 @@ var Cache = function(){
 
 Cache.prototype.createNew = function(){
 	var requestId = this._genGUID();
-	this._cache[requestId] = [];
+	this._cache[requestId] = {};
 	return requestId;
 };
 

@@ -1,12 +1,15 @@
 var utils = require('./utils'),
 	queryHandlers = {
-		Lights: require('./handlers/lights')
+		appointment: require('./handlers/Appointment')
 	};
 
 module.exports = {
 
-	analyse: function(query, rawCallback){
+	analyse: function(query, cachedData, rawCallback){
 		var self = this;
+
+		//analyser ignores case
+		query = query.toLowerCase();
 
 		var callback = {
 			category: '',
@@ -21,20 +24,30 @@ module.exports = {
 				rawCallback({
 					category: self.category,
 					method: self.method,
-					details: self.details
+					details: self.details,
+					humanQuery: query
 				});
 			}
 		};
+
+		if(cachedData){
+			//cachedData is here
+			//go to category right away
+			console.log(cachedData);
+			callback.category = cachedData.category;
+			new queryHandlers[cachedData.category](null, query, callback, cachedData);
+			return;
+		}
 
 		//first check
 		//check category
 		utils.triggerWordsSwitch({
 			query: query,
 			triggerWords: [{
-				words: ['lights', 'light'],
+				words: ['appointment', 'meeting'],
 				handler: function(foundWord, query){
-					callback.category = 'lights';
-					new queryHandlers.Lights(foundWord, query, callback);
+					callback.category = 'appointment';
+					new queryHandlers.appointment(foundWord, query, callback);
 				}
 			}],
 			defaultAction: function(){

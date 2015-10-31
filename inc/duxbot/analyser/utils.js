@@ -1,5 +1,3 @@
-var wolfram = require('wolfram').createClient(process.env.WOLFRAM_APPID);
-
 var utils = {
 
 	triggerWordsSwitch: function(options){
@@ -39,23 +37,8 @@ var utils = {
 		return new RegExp(' '+word+' ').test(str) ||
 			   new RegExp('^'+word+' ').test(str) ||
 			   new RegExp(' '+word+'$').test(str);
-	},
-
-	getWolframResult: function(query){
-		var self = this;
-		wolfram.query(query, function(err, result){
-		    if(err) throw err;
-
-		    if(result[1] && result[1].subpods[0]){
-		    	self.callback(result[1].subpods[0].value.replace(/\(.+\)/g, ''));
-		    } else {
-		    	self.callback({
-		    		statusCode: 1,
-		    		prettyResult: 'Sorry, I do not know what you mean.'
-		    	});
-		    }
-		});
 	}
+
 };
 
 module.exports = utils;

@@ -5,7 +5,7 @@ module.exports = function(app, options){
 	var ctrl = new AnalyseController(app, options),
 		process = function(req, res){
 			if(!req.body.query){
-				return res.json({
+				res.json({
 					success: false,
 					message: 'The query property is required but was not found in the request body'
 				});
