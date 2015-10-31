@@ -13,6 +13,12 @@ Cache.prototype.get = function(requestId){
 	return (typeof item !== 'object') ? null : item;
 };
 
+Cache.prototype.remove = function(requestId){
+    if(typeof this._cache[requestId] === 'object'){
+        delete this._cache[requestId];
+    }
+};
+
 Cache.prototype._genGUID = function(length){
     if(typeof length !== 'number') length = 41;
 

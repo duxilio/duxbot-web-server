@@ -38,11 +38,9 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 	 		//if there is cached data
 	 		//add it to the results that will be passed
 	 		//to the api handler
-	 		console.log('BEFORE', analyserResult);
 	 		analyserResult.category = cachedData.category;
 	 		analyserResult.method = cachedData.method;
 	 		analyserResult.details = utils.extendObj(analyserResult.details, cachedData.details);
-	 		console.log('AFTER', analyserResult);
 	 	}
 
 		 logger.log('IS_NEW_REQUEST', requestId === null, 'REQUEST_ID', requestId);
@@ -73,6 +71,13 @@ Duxbot.prototype.analyse = function(query, requestId, callback){
 	 			cacheItem.category = analyserResult.category;
 	 			cacheItem.method = analyserResult.method;
 	 			cacheItem.details = analyserResult.details;
+		 	} else if(output.type === 'response' && requestId) {
+		 		//check if it belongs to a requestId
+		 		//if so remove the record from cache as
+		 		//the request has been resolved
+		 		//(requestId are only there during the process of getting more info)
+		 		logger.log('RECURSIVE_REQUEST_COMPLETED', requestId);
+		 		cache.remove(requestId);
 		 	}
 
 		 	logger.log('OUTPUT', output, '\n\n');

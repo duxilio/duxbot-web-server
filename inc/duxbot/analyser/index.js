@@ -33,7 +33,6 @@ module.exports = {
 		if(cachedData){
 			//cachedData is here
 			//go to category right away
-			console.log(cachedData);
 			callback.category = cachedData.category;
 			new queryHandlers[cachedData.category](null, query, callback, cachedData);
 			return;

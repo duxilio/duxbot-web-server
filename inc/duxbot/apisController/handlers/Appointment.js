@@ -40,6 +40,13 @@ Appointment.prototype._scheduleAppointment = function(details){
 		}
 	};
 
+	//if everything is there
+	callback({
+		success: true,
+		type: 'response',
+		message: 'Appointment Created',
+		parsedDetails: details
+	});
 };
 
 module.exports = Appointment;
