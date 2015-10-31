@@ -6,9 +6,12 @@ var Show = function(options, callback){
 	//check method
 	switch(options.method){
 		case 'show_img':
-			var queryMatch = options.humanQuery.match(/show me an image (.+)/);
-			if(queryMatch && queryMatch[1]){
-				var query = queryMatch[1];
+			var queryMatch = options.humanQuery.match(/show me (a|an) (image|picture|photo) of (.+)/);
+			
+			console.log(queryMatch);
+
+			if(queryMatch && queryMatch[3]){
+				var query = queryMatch[3];
 
 				reqHelper.get('/giphy/'+encodeURIComponent(query), function(res){
 					if(res.data){

@@ -68,7 +68,8 @@ module.exports = {
 					new queryHandlers.banking(foundWord, query, callback);
 				}
 			}, {
-				words: ['show me an image'],
+				words: ['show me an (image|picture|photo)'],
+				customRegex: true,
 				handler: function(foundWord, query){
 					callback.category = 'show';
 					new queryHandlers.show(foundWord, query, callback);

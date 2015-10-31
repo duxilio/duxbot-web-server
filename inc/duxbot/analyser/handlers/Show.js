@@ -27,7 +27,8 @@ Show.prototype._checkMethod = function(query, cachedData){
 	utils.triggerWordsSwitch({
 		query: query,
 		triggerWords: [{
-			words: ['show me an image'],
+			words: ['show me an (image|picture|photo)'],
+			customRegex: true,
 			handler: function(){
 				self._callback.method = 'show_img';
 			}
