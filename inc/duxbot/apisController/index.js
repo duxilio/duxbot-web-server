@@ -32,11 +32,23 @@ var apisController = {
 		} else {
 			//category is unknown
 			//ask wolfram
-			this._askWolfram(options.humanQuery, function(result){
+			this._askWolfram(options.humanQuery, function(strResult){
+				var result = strResult,
+					arrResult = result.split('\n'),
+					details = null;
+
+				if(arrResult.length > 1){
+					result = 'Here\'s what I\'ve found';
+					details = {
+						definitions: arrResult
+					};
+				}
+				
 				callback({
 					success: result !== null,
 					type: 'response',
 					message: result || 'Sorry, I do not know what you mean.',
+					details: details,
 					parsedDetails: null
 				});
 			});
@@ -49,7 +61,8 @@ var apisController = {
 		    if(err) throw err;
 
 		    if(result[1] && result[1].subpods[0]){
-		    	callback(result[1].subpods[0].value.replace(/\(.+\)/g, ''));
+		    	var strResult = result[1].subpods[0].value.replace(/\(.+\)/g, '')
+		    	callback(strResult);
 		    } else {
 		    	callback(null);
 		    }

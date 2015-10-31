@@ -33,7 +33,6 @@ Event.prototype._checkMethod = function(query, cachedData){
 		triggerWords: [{
 			words: ['create', 'plan', 'schedule', 'have an appointment', 'have an event', 'have a meeting'],
 			handler: function(){
-				apisHelper.getContacts();
 				self._handleScheduleMethod(query, cachedData);
 			}
 		}],

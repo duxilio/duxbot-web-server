@@ -6,7 +6,10 @@ var Banking = function(options, callback){
 	//check method
 	switch(options.method){
 		case 'check_balance':
+			//get balance 
 			apisHelper.get('/balance', function(data){
+
+				//construct human friendly result
 				var accounts = data.ConfiguredAccounts.Account,
 					msg = 'you have ';
 				
