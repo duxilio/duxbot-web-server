@@ -52,7 +52,7 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 
 	//check invite emails
 	var contacts = [{
-		triggers: ['paddington'],
+		triggers: ['dave'],
 		email: 'matti@duxilio.com'
 	}, {
 		triggers: ['me', 'myself'],
@@ -80,7 +80,7 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 
 	//time
 	if(!details.time){
-		match = query.match(/(\d+(pm|am))/);
+		match = query.match(/(\d+\s?(pm|am|p\.m\.|a\.m\.|o\'clock))/);
 		if(match !== null){
 			details.time = match[1];
 		}
