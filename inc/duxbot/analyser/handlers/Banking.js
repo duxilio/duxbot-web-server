@@ -36,6 +36,11 @@ Banking.prototype._checkMethod = function(query, cachedData){
 			handler: function(){
 				self._callback.method = 'show_banks_in';
 			}
+		},{
+			words: ['latest transactions', 'recent transactions'],
+			handler: function(){
+				self._callback.method = 'recent_transactions';
+			}
 		}],
 		defaultAction: function(){
 			self._callback.method = 'unknown';

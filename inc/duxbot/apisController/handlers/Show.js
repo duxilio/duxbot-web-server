@@ -6,7 +6,7 @@ var Show = function(options, callback){
 	//check method
 	switch(options.method){
 		case 'show_img':
-			var queryMatch = options.humanQuery.match(/show me (a|an) (image|picture|photo) of (.+)/);
+			var queryMatch = options.humanQuery.match(/show (me )?an? (image|picture|photo) of (.+)/);
 			
 			console.log(queryMatch);
 

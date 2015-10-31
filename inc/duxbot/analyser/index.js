@@ -62,13 +62,13 @@ module.exports = {
 					new queryHandlers.general(foundWord, query, callback);
 				}
 			}, {
-				words: ['our current balance', 'banks in', 'a bank in'],
+				words: ['our current balance', 'banks in', 'a bank in', 'latest transactions', 'recent transactions'],
 				handler: function(foundWord, query){
 					callback.category = 'banking';
 					new queryHandlers.banking(foundWord, query, callback);
 				}
 			}, {
-				words: ['show me an (image|picture|photo)'],
+				words: ['show (me )?an? (image|picture|photo)'],
 				customRegex: true,
 				handler: function(foundWord, query){
 					callback.category = 'show';

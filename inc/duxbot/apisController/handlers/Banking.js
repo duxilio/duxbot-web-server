@@ -72,6 +72,28 @@ var Banking = function(options, callback){
 				});
 			}
 			break;
+		case 'recent_transactions':
+			reqHelper.get('/transaction/latest', function(res){
+				res.forEach(function(item, idx){
+					res[idx] = {
+						location: item.beneficiaryAccountname,
+						price: item.amount+' '+item.currency,
+						date: item.valueDate,
+						label: item.label
+					};
+				});
+
+				callback({
+					success: true,
+					type: 'response',
+					message: 'here are your 3 latest transactions',
+					details: {
+						transactions: res
+					},
+					parsedDetails: {}
+				});
+			});
+			break;
 		default:
 			callback({
 				success: false,
