@@ -1,13 +1,5 @@
 var utils = require('../utils');
 
-var persons = [{
-	trigger: 'paddington',
-	email: 'matti@duxilio.com'
-}, {
-	trigger: 'me',
-	email: 'koen@duxilio.com'
-}];
-
 var Event = function(foundWord, query, callback, cachedData){
 	this._callback = callback;
 	this.checkForTriggerWords(query, cachedData);
@@ -57,6 +49,16 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 	this._callback.method = 'schedule';
 
 	//check details
+
+	//check invite emails
+	var persons = [{
+		trigger: 'paddington',
+		email: 'matti@duxilio.com'
+	}, {
+		trigger: 'me',
+		email: 'koen@duxilio.com'
+	}];
+
 	if(!details.inviteEmails){
 		var inviteEmails = [];
 		for(var i = 0; i < persons.length; i++){
@@ -71,9 +73,9 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 
 	//time
 	if(!details.time){
-		match = query.match(/\d(pm|am)/);
+		match = query.match(/(\d(pm|am))/);
 		if(match !== null){
-			details.time = match[0];
+			details.time = match[1];
 		}
 	}
 
@@ -81,7 +83,7 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 	if(!details.date){
 		match = query.match(/(tomorrow)/);
 		if(match !== null){
-			details.date = match[0];
+			details.date = match[1];
 		}
 	}
 
@@ -90,7 +92,7 @@ Event.prototype._handleScheduleMethod = function(query, cachedData){
 		match = query.match(/called ([^\s]+)/);
 		console.log('NAME', match);
 		if(match !== null){
-			details.name = match[0];
+			details.name = match[1];
 		}
 	}
 
