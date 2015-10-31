@@ -1,4 +1,4 @@
-var apisHelper = require('../../apisHelper');
+var reqHelper = require('../../reqHelper');
 
 var Banking = function(options, callback){
 	this._callback = callback;
@@ -7,7 +7,7 @@ var Banking = function(options, callback){
 	switch(options.method){
 		case 'check_balance':
 			//get balance 
-			apisHelper.get('/balance', function(data){
+			reqHelper.get('/balance', function(data){
 
 				//construct human friendly result
 				var accounts = data.ConfiguredAccounts.Account,
@@ -27,6 +27,50 @@ var Banking = function(options, callback){
 					parsedDetails: {}
 				});
 			});
+			break;
+		case 'show_banks_in':
+			var cityMatch = options.humanQuery.match(/in ([^\s]+)/);
+			if(cityMatch && cityMatch[1]){
+				var cityName = cityMatch[1];
+
+				reqHelper.get('/banks/'+cityName, function(banks){
+					if(banks.length < 1){
+						//no banks found
+						callback({
+							success: true,
+							type: 'response',
+							message: 'could not find any banks in '+cityName,
+							parsedDetails: {}
+						});
+						return;
+					}
+
+					//filter fields
+					banks.forEach(function(bank, idx){
+						banks[idx] = {
+							address: bank.address,
+							telephone: bank.telephone
+						};
+					});
+
+					callback({
+						success: true,
+						type: 'response',
+						message: 'Here are the first '+(banks.length < 3 ? banks.length : 3)+' Rabobanks',
+						details: {
+							banks: banks
+						},
+						parsedDetails: {}
+					});
+				});
+			} else {
+				callback({
+					success: true,
+					type: 'response',
+					message: 'please specify a city',
+					parsedDetails: {}
+				});
+			}
 			break;
 		default:
 			callback({

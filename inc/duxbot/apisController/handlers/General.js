@@ -26,13 +26,26 @@ var General = function(options, callback){
 				message: 'All sorts of stuff',
 				details: {
 					examples: [
+						'who are you',
+						'who made you',
 						'me and dave have a meeting tomorrow',
 						'plan a meeting',
 						'me and paddington have an appointment at 2pm tomorrow called awesomeness4eva',
-						'what is 2 plus 2 divided by 10',
-						'tell me a joke'
+						'who was the first presedent of the United States',
+						'tell me a joke',
+						'show me an image of Harvey Specter',
+						'show nearby banks',
+						'show banks in Amsterdam'
 					]
 				},
+				parsedDetails: {}
+			});
+			break;
+		case 'who_made_you':
+			callback({
+				success: true,
+				type: 'response',
+				message: 'Koen and Matti, I hear those guys are awesome',
 				parsedDetails: {}
 			});
 			break;

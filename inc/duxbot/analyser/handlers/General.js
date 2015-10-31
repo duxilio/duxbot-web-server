@@ -39,6 +39,12 @@ General.prototype._checkMethod = function(query, cachedData){
 				self._callback.method = 'who_are_you';
 			}
 		}, {
+			words: ['^who made you$'],
+			customRegex: true,
+			handler: function(){
+				self._callback.method = 'who_made_you';
+			}
+		}, {
 			words: ['^what can (i|you) (do|say)$'],
 			customRegex: true,
 			handler: function(){

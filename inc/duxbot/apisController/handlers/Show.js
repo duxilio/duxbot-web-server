@@ -1,4 +1,4 @@
-var apisHelper = require('../../apisHelper');
+var reqHelper = require('../../reqHelper');
 
 var Show = function(options, callback){
 	this._callback = callback;
@@ -6,11 +6,11 @@ var Show = function(options, callback){
 	//check method
 	switch(options.method){
 		case 'show_img':
-			var queryMatch = options.humanQuery.match(/show me (.+)/);
+			var queryMatch = options.humanQuery.match(/show me an image (.+)/);
 			if(queryMatch && queryMatch[1]){
 				var query = queryMatch[1];
 
-				apisHelper.get('/giphy/'+encodeURIComponent(query), function(res){
+				reqHelper.get('/giphy/'+encodeURIComponent(query), function(res){
 					if(res.data){
 						callback({
 							success: true,

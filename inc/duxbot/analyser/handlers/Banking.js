@@ -31,6 +31,11 @@ Banking.prototype._checkMethod = function(query, cachedData){
 			handler: function(){
 				self._callback.method = 'check_balance';
 			}
+		},{
+			words: ['banks in', 'rob a bank in'],
+			handler: function(){
+				self._callback.method = 'show_banks_in';
+			}
 		}],
 		defaultAction: function(){
 			self._callback.method = 'unknown';

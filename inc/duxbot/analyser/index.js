@@ -53,7 +53,7 @@ module.exports = {
 				}
 			}, {
 				words: [
-						'^hey$', '^who are you$',
+						'^hey$', '^who are you$', '^who made you$',
 						'^what can (i|you) (do|say)$'
 				],
 				customRegex: true,
@@ -62,13 +62,13 @@ module.exports = {
 					new queryHandlers.general(foundWord, query, callback);
 				}
 			}, {
-				words: ['our current balance'],
+				words: ['our current balance', 'banks in', 'a bank in'],
 				handler: function(foundWord, query){
 					callback.category = 'banking';
 					new queryHandlers.banking(foundWord, query, callback);
 				}
 			}, {
-				words: ['show me'],
+				words: ['show me an image'],
 				handler: function(foundWord, query){
 					callback.category = 'show';
 					new queryHandlers.show(foundWord, query, callback);
