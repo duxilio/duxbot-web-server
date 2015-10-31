@@ -5,28 +5,28 @@ We hired a new office assistant lately. I asked her to put a meeting in my calen
 
 But wait.. What if you could have about the same experience as with a physical someone but let a computer do all the work instead. If that would work well it could be a lot more accurate and well, a computer doesn't ask for a paystroke every month.
 
-1. `Hey Sara`
-2. `Yes?`
+`Hey Sara`<br>
+`Yes?`
 
-1. `Sara, who are you?`
-2. `I'm Sara, your virtual office assistant`
+`Sara, who are you?`<br>
+`I'm Sara, your virtual office assistant`
 
-1. `Sara, what can you do?`
-2. `I can do all sorts of things like planning events, control office stuff like the lights and much more. I'm also hooked up to the Wolfram API so I am also able to answer questions like "what is 2 + 2" and "what is the distance from here to the moon".`
+`Sara, what can you do?`<br>
+`I can do all sorts of things like planning events, control office stuff like the lights and much more. I'm also hooked up to the Wolfram API so I am also able to answer questions like "what is 2 + 2" and "what is the distance from here to the moon".`
 
-1. `Sara, can you plan an event?`
-2. `What time is the event?`
-3. `2pm`
-4. `What date is the event?`
-5. `tomorrow`
-6. `Who is attending?`
-7. `Me, dave and joseph from Microsoft`
-8. `I created the following event for you`
+`Sara, can you plan an event?`<br>
+`What time is the event?`<br>
+`2pm`<br>
+`What date is the event?`<br>
+`tomorrow`<br>
+`Who is attending?`<br>
+`Me, dave and joseph from Microsoft`<br>
+`I created the following event for you`
 
 Awesome, but how is this different from for example Siri? Well for starters its not a PA, its and office assistant. And its expandable with anything you want, so it can do more than Siri will ever be able to, like checking your bank balance.
 
-1. `Sara, whats our current balance`
-2. `2 million euro's and 5 cents`
+`Sara, whats our current balance`<br>
+`2 million euro's and 5 cents`
 
 Sara, your new expendable office assistant.
 
