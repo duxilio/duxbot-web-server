@@ -40,7 +40,7 @@ var General = function(options, callback){
 			callback({
 				success: false,
 				type: 'response',
-				message: 'You want to do something with an General, but I\'m not sure what',
+				message: 'You want to do something General, but I\'m not sure what',
 				parsedDetails: {}
 			});
 			break;
