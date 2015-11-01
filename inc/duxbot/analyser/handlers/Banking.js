@@ -47,7 +47,7 @@ Banking.prototype._checkMethod = function(query, cachedData){
 				self._callback.method = 'recent_transactions';
 			}
 		},{
-			words: ['^prepare a transfer$'],
+			words: ['^prepare a transfer'],
 			customRegex: true,
 			handler: function(){
 				self._handleMakeTransfer(query, cachedData);
