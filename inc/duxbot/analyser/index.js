@@ -65,7 +65,7 @@ module.exports = {
 				words: ['(our|my) current balance',
 				  	    'banks in', 'rob a bank in',
 				  	    '(latest|recent) transactions',
-				  	    'transfer [0-9]+'],
+				  	    'prepare a transfer'],
 				customRegex: true,
 				handler: function(foundWord, query){
 					callback.category = 'banking';

@@ -5,14 +5,14 @@ module.exports = {
 	_apiUrl: '149.210.230.11',
 	_apiPort: 9000,
 
-    get: function(path, callback){
+    _base: function(type, path, data, callback){
     	var apiUrl = this._apiUrl,
     		apiPort = this._apiPort,
     		params = {
     			host: apiUrl,
     			path: path,
     			port: apiPort,
-    			method: 'GET',
+    			method: type,
     			headers: {
                     'Authorization': 'mvdweem@gmail.com',
                     'Content-Type': 'application/json'
@@ -33,7 +33,16 @@ module.exports = {
             });
         });
 
+        req.write(type === 'GET' ? '' : JSON.stringify(data));
         req.end();
+    },
+
+    get: function(path, callback){
+        this._base('GET', path, null, callback);
+    },
+
+    post: function(path, data, callback){
+        this._base('POST', path, data, callback);
     }
 
 };

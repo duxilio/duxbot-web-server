@@ -21,7 +21,7 @@ Banking.prototype._checkMethod = function(query, cachedData){
 
 	if(cachedData){
 		switch(cachedData.method){
-			case 'make_transfer':
+			case 'prepare_transfer':
 				this._handleMakeTransfer(query, cachedData);
 				break;
 		}
@@ -47,8 +47,7 @@ Banking.prototype._checkMethod = function(query, cachedData){
 				self._callback.method = 'recent_transactions';
 			}
 		},{
-			words: ['transfer [0-9]+'],
-			customRegex: true,
+			words: ['prepare a transfer'],
 			handler: function(){
 				self._handleMakeTransfer(query, cachedData);
 			}
@@ -62,7 +61,7 @@ Banking.prototype._checkMethod = function(query, cachedData){
 Banking.prototype._handleMakeTransfer = function(query, cachedData){
 	var details = cachedData && cachedData.details ? cachedData.details : {};
 
-	this._callback.method = 'make_transfer';
+	this._callback.method = 'prepare_transfer';
 
 	if(!details.amount){
 		var match = query.match(/([0-9]+) (euro|dollar)/);
@@ -71,11 +70,17 @@ Banking.prototype._handleMakeTransfer = function(query, cachedData){
 		}
 	}
 
-	if(!details.accountNumber){
-		var match = query.match(/to (.+)/);
-		console.log(match);
+	if(!details.contactName){
+		var match = query.match(/to ([^\s]+)/);
 		if(match && match[1]){
-			details.accountNumber = match[1];
+			details.contactName = match[1];
+		}
+	}
+
+	if(!details.description){
+		var match = query.match(/with description (.+)/);
+		if(match && match[1]){
+			details.description = match[1];
 		}
 	}
 

@@ -95,14 +95,15 @@ var Banking = function(options, callback){
 				});
 			});
 			break;
-		case 'make_transfer':
+		case 'prepare_transfer':
 			utils.processNeedyMethod({
 				neededProps: {
 					amount: 'What is the amount you would like to transfer?',
-					accountNumber: 'What is the account number you would like to transfer to?'
+					contactName: 'What is the name of the contact you would like to transfer the money to?',
+					description: 'What would you like to be the description?'
 				},
 				reqDetails: options.details,
-				success: this._makeTransfer.bind(this),
+				success: this._prepareTransfer.bind(this),
 				resCallback: callback
 			});
 			break;
@@ -117,15 +118,56 @@ var Banking = function(options, callback){
 	}
 };
 
-Banking.prototype._makeTransfer = function(options){
+Banking.prototype._prepareTransfer = function(options){
 	var callback = this._callback;
 
-	callback({
-		success: true,
-		type: 'response',
-		message: 'do transfer',
-		details: options,
-		parsedDetails: {}
+	//get contacts
+	reqHelper.get('/addressbook', function(contacts){
+		var contactDetails;
+
+		//search for contact match
+		contacts.forEach(function(contact){
+			if(contact.username.toLowerCase() === options.contactName){
+				contactDetails = contact;
+			}
+		});
+
+		//contact not found
+		if(!contactDetails){
+			callback({
+				success: false,
+				type: 'response',
+				message: 'contact '+options.contactName+' not found in your Rabobank contactsbook',
+				details: null,
+				parsedDetails: {}
+			});
+			return;
+		}
+
+		var transferOptions = {
+		    amount: Number(options.amount),
+		    fromAccount: "NL43RABO0119588404",
+		    toAccount: contactDetails.iban_payment,
+		    toName: contactDetails.username,
+		    Description: options.description
+		};
+
+		//if contact is found
+		//transfer tha moneyz
+		reqHelper.post('/transfer', transferOptions,
+		function(res){
+			if(res.transactionkey){
+				//success
+				callback({
+					success: true,
+					type: 'response',
+					message: 'I prepared the following transfer for you',
+					details: transferOptions,
+					parsedDetails: transferOptions
+				});
+			}
+		});
+
 	});
 };
 
