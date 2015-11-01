@@ -107,6 +107,31 @@ var Banking = function(options, callback){
 				resCallback: callback
 			});
 			break;
+		case 'show_prepared_transfers':
+			reqHelper.get('/transfer', function(transfers){
+				var prettyTransfers = [];
+
+				transfers.forEach(function(transfer){
+					prettyTransfers.push({
+					    amount: transfer.amount,
+					    fromAccount: transfer.accountnumberIBAN,
+					    toAccount: transfer.beneficiaryAccount,
+					    toName: transfer.beneficiaryAccountname,
+					    Description: transfer.description
+					});
+				});
+
+				callback({
+					success: true,
+					type: 'response',
+					message: 'Here are your prepared transfers',
+					details: {
+						preparedTransfers: prettyTransfers
+					},
+					parsedDetails: {}
+				});
+			});
+			break;
 		default:
 			callback({
 				success: false,
